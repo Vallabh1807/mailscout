@@ -62,7 +62,7 @@ Provide your professional background:
 - **Upload**: Select your PDF/DOCX CV for attachment.
 
 ### Step 4 — AI Drafting & Sending
-1. **Groq API Key**: Get it for free at [console.groq.com](https://console.groq.com) or [unsequreapi.com](https://unsequreapi.com).
+1. **Groq API Key**: Get it for free at [console.groq.com](https://console.groq.com) or [unsecuredapikeys.com](https://unsecuredapikeys.com).
 2. **Gmail App Password**: Enter your Gmail and 16-digit App Password.
 3. **Draft**: Click "Generate AI Email". The AI uses a professional multi-paragraph reference to write your message.
 4. **Send**: One-click send.

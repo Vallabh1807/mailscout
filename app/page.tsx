@@ -105,8 +105,10 @@ export default function Home() {
 
   const [emailSubject, setEmailSubject] = useState('')
   const [emailBody, setEmailBody] = useState('')
+  const [groqKey, setGroqKey] = useState('')
   const [draftLoading, setDraftLoading] = useState(false)
   const [jobRole, setJobRole] = useState('')
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   // Step 4: Send
   const [senderEmail, setSenderEmail] = useState(process.env.NEXT_PUBLIC_GMAIL || '')
@@ -320,7 +322,8 @@ export default function Home() {
           skills: cvInfo.skills,
           projects: cvInfo.projects,
           recipientName: profile.fullName,
-          recipientCompany: profile.company
+          recipientCompany: profile.company,
+          userApiKey: groqKey // Pass the key if user provided one
         })
       })
 
@@ -404,6 +407,7 @@ export default function Home() {
       err(`Sent ${sentCount}/${selectedEmails.length}. Errors: ${errors.join('; ')}`)
     } else {
       setSuccess(`✓ Successfully sent ${sentCount} email${sentCount !== 1 ? 's' : ''}`)
+      setShowSuccessModal(true)
     }
     setLoading(false)
   }
@@ -904,8 +908,11 @@ export default function Home() {
                   <div className="terminal-border" style={{ padding: '10px 14px' }}>
                     <input type="password" value={groqKey} onChange={e => setGroqKey(e.target.value)} placeholder="gsk_..." style={{ fontSize: 13 }} />
                   </div>
-                  <div style={{ fontSize: 10, color: 'var(--text3)', marginTop: 4 }}>
-                    Using Groq Llama-3 for near-instant generation.
+                  <div style={{ fontSize: 10, color: 'var(--text3)', marginTop: 6, display: 'flex', flexDirection: 'column', gap: 4 }}>
+                    <span>Using Groq Llama-3 for near-instant generation.</span>
+                    <span style={{ color: 'var(--text2)' }}>
+                      Note: You can get a free key from <a href="https://unsecuredapikeys.com" target="_blank" style={{ color: 'var(--accent)', textDecoration: 'underline' }}>unsecuredapikeys.com</a> or <a href="https://console.groq.com" target="_blank" style={{ color: 'var(--accent)', textDecoration: 'underline' }}>console.groq.com</a>
+                    </span>
                   </div>
                 </div>
 
@@ -1000,6 +1007,56 @@ export default function Home() {
             marginTop: 16
           }}>
             ⚠ {error}
+          </div>
+        )}
+
+        {/* Success Modal */}
+        {showSuccessModal && (
+          <div style={{
+            position: 'fixed',
+            top: 0, left: 0, right: 0, bottom: 0,
+            background: 'rgba(0,0,0,0.85)',
+            backdropFilter: 'blur(8px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+            padding: '20px'
+          }}>
+            <div className="slide-in" style={{
+              background: 'var(--bg2)',
+              border: '1px solid var(--accent)',
+              padding: '40px',
+              maxWidth: '400px',
+              width: '100%',
+              textAlign: 'center',
+              borderRadius: '8px',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.4)'
+            }}>
+              <div style={{ fontSize: '48px', marginBottom: '20px' }}>🚀</div>
+              <h2 style={{ fontSize: '24px', color: 'var(--text)', marginBottom: '12px' }}>Emails Sent!</h2>
+              <p style={{ color: 'var(--text3)', fontSize: '14px', marginBottom: '30px', lineHeight: 1.6 }}>
+                Your outreach has been launched successfully. High-five! 🖐️
+              </p>
+              <button
+                className="btn-primary"
+                onClick={() => {
+                  setShowSuccessModal(false);
+                  setStep(1);
+                  setProfile({
+                    firstName: '', middleName: '', lastName: '', fullName: '',
+                    nameVariations: '',
+                    company: '', headline: '', personalEmailGuess: '', inferredDomain: '', about: ''
+                  });
+                  setEmails([])
+                  setSelectedEmails([]); setEmailSubject(''); setEmailBody('')
+                  setSuccess(''); setCvFile(null); setGroqKey('')
+                }}
+                style={{ width: '100%' }}
+              >
+                Scout Another Target →
+              </button>
+            </div>
           </div>
         )}
 
