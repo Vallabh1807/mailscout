@@ -10,13 +10,14 @@ export async function POST(req: NextRequest) {
             skills,
             projects,
             recipientName,
-            recipientCompany
+            recipientCompany,
+            userApiKey
         } = await req.json()
 
-        const apiKey = process.env.GROQ_API_KEY
+        const apiKey = userApiKey || process.env.GROQ_API_KEY
 
         if (!apiKey) {
-            return NextResponse.json({ error: 'Server configuration error: Missing API Key' }, { status: 500 })
+            return NextResponse.json({ error: 'Missing API Key. Please provide one in the UI or check server environment variables.' }, { status: 400 })
         }
 
         const prompt = `You are an expert cold email writer. Write a human-sounding cold outreach email with professional paragraph spacing.
