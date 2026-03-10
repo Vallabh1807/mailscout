@@ -1050,7 +1050,7 @@ export default function Home() {
                   });
                   setEmails([])
                   setSelectedEmails([]); setEmailSubject(''); setEmailBody('')
-                  setSuccess(''); setCvFile(null); setGroqKey('')
+                  setSuccess(''); setCvFile(null);
                 }}
                 style={{ width: '100%' }}
               >

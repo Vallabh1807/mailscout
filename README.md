@@ -31,11 +31,11 @@ npm install
 ```
 
 ### 2. Environment Variables
-Create a `.env.local` file based on `.env.example`:
+You can set these in Vercel for convenience, **OR leave them blank** and enter them directly in the app UI when you use it.
 ```bash
-GROQ_API_KEY=your_key
-GMAIL_USER=your_email@gmail.com
-GMAIL_PASS=your_app_password
+GROQ_API_KEY=your_key            # Optional: Fallback key
+GMAIL_USER=your_email@gmail.com   # Optional: Default sender
+GMAIL_PASS=your_app_password      # Optional: Default password
 ```
 
 ### 3. Run locally
